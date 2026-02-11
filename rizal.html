@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jose Rizal - Biography</title> <link rel="icon" type="image/png" href="IMG/TAYTUNGLOGO.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- COPY OF YOUR SHARED STYLES --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; color: #ffffff; 
+            margin: 0; padding: 0; min-height: 100vh; 
+            display: flex; flex-direction: column; 
+            background-image: radial-gradient(circle at 50% 0%, #1a2a3a 0%, #000000 70%); 
+            background-attachment: fixed;
+        }
+        .navbar { 
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 0.8rem 2rem; display: flex; justify-content: center; align-items: center; 
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; color: #fff; text-transform: uppercase; }
+        .logo-img { height: 50px; width: auto; cursor: pointer; }
+
+        /* --- BIO PAGE SPECIFIC STYLES --- */
+        .bio-container {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 2rem;
+            display: flex;
+            gap: 3rem;
+            align-items: flex-start;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .bio-image-wrapper {
+            flex: 1;
+            position: sticky;
+            top: 100px;
+        }
+
+        .bio-img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 20px;
+            border: 4px solid rgba(165, 180, 252, 0.3);
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .bio-content {
+            flex: 1.5;
+            background: rgba(255,255,255,0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; background: linear-gradient(90deg, #fff, #a5b4fc); -webkit-background-clip: text; color: transparent; }
+        h3 { margin: 5px 0 20px 0; color: #a5b4fc; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .quote-box {
+            border-left: 4px solid #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #e0e7ff;
+            border-radius: 0 10px 10px 0;
+        }
+
+        p { line-height: 1.8; color: #d1d5db; font-size: 1rem; margin-bottom: 1.5rem; text-align: justify; }
+
+        .back-btn { 
+            display: inline-block; padding: 12px 30px; 
+            background: transparent; color: #fff; 
+            border: 1px solid rgba(255,255,255,0.2); 
+            border-radius: 50px; margin-top: 2rem; 
+            text-decoration: none; transition: 0.3s; 
+        }
+        .back-btn:hover { background: #fff; color: #000; transform: translateX(-5px); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 800px) {
+            .bio-container { flex-direction: column; align-items: center; }
+            .bio-image-wrapper { position: static; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="IMG/TAYTUNGLOGO.png" alt="BTTHS" class="logo-img" onclick="location.href='index.html'">
+            BTTHS Directory
+        </div>
+    </nav>
+
+    <div class="bio-container">
+        
+        <div class="bio-image-wrapper">
+            <img src="IMG/JR.jpg" alt="Jose Rizal" class="bio-img">
+        </div>
+
+        <div class="bio-content">
+            <h1>Jose Rizal</h1>
+            <h3>Filipino National Hero</h3>
+
+            <div class="quote-box">
+                "He who does not know how to look back at where he came from will never get to his destination."
+            </div>
+
+            <p>
+                Dr. Jose Rizal (1861–1896) was a Filipino nationalist and polymath during the tail end of the Spanish colonial period of the Philippines. He is considered the national hero (pambansang bayani) of the Philippines.
+            </p>
+            <p>
+                Rizal was a skilled doctor, writer, and artist. He wrote two famous novels, <strong>Noli Me Tangere</strong> and <strong>El Filibusterismo</strong>, which exposed the cruelty of the Spanish friars and inspired the Philippine Revolution.
+            </p>
+            <p>
+                Despite never fighting in a war, his words were his weapon. He was executed by firing squad in Bagumbayan (now Rizal Park) on December 30, 1896, igniting the fire of patriotism in the hearts of Filipinos.
+            </p>
+
+            <a href="leaders.html" class="back-btn">← Back to Monuments</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

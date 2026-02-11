@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goals - BTTHS Directory</title>
+    <link rel="icon" type="image/png" href="IMG/TAYTUNGLOGO.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; color: #ffffff; 
+            min-height: 100vh; margin: 0; padding: 0; 
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1a2a3a 0%, #000000 70%);
+        }
+
+        /* --- CLEAN CENTERED NAVBAR --- */
+        .navbar { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 1rem 2rem; 
+            display: flex; justify-content: center; align-items: center; 
+            z-index: 100; position: sticky; top: 0; 
+        }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; font-weight: 600; letter-spacing: 1px; color: #fff; cursor: pointer; text-transform: uppercase; }
+        .logo-img { height: 40px; width: auto; filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.8)); transition: transform 0.3s ease; }
+        .logo:hover .logo-img { transform: scale(1.1); }
+
+        .hero { text-align: center; padding: 4rem 2rem; max-width: 800px; margin: 0 auto; }
+        .hero h1 { font-size: 2.2rem; font-weight: 600; margin: 0 0 10px 0; background: linear-gradient(90deg, #fff, #a5b4fc); background-clip: text; -webkit-background-clip: text; color: transparent;}
+
+        /* --- GLASS GOAL CARDS --- */
+        .goal-item { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px; 
+            margin-bottom: 1rem; 
+            overflow: hidden; 
+            transition: all 0.3s ease;
+        }
+        .goal-item:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .goal-title { 
+            padding: 1.2rem; 
+            cursor: pointer; 
+            font-weight: 600; 
+            list-style: none; 
+            display: flex; justify-content: space-between; align-items: center;
+            color: #e0e0e0;
+        }
+        .goal-title:hover { color: #fff; }
+        
+        /* Custom Plus Icon */
+        .goal-title::after { content: '+'; font-size: 1.5rem; color: #6366f1; transition: 0.3s; }
+        details[open] .goal-title::after { content: '-'; transform: rotate(180deg); }
+
+        .goal-description { 
+            padding: 0 1.5rem 1.5rem 1.5rem; 
+            color: #999; 
+            text-align: left; 
+            line-height: 1.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .back-link { display: inline-block; margin-top: 2rem; color: #888; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .back-link:hover { color: #fff; }
+
+        #transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; transition: opacity 0.5s; pointer-events: none; opacity: 1; }
+    </style>
+</head>
+<body>
+    <div id="transition-overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo" onclick="location.href='index.html'">
+            <img src="IMG/TAYTUNGLOGO.png" alt="BTTHS" class="logo-img">
+            BTTHS Directory
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Project Goals</h1>
+        
+        <details class="goal-item">
+            <summary class="goal-title">Enhance Accessibility</summary>
+            <div class="goal-description">To provide an easy-to-navigate directory so students, parents, and visitors can find locations quickly.</div>
+        </details>
+        
+        <details class="goal-item">
+            <summary class="goal-title">Support Education</summary>
+            <div class="goal-description">To align with the school's mission of delivering high-quality education by integrating helpful tools.</div>
+        </details>
+        
+        <details class="goal-item">
+            <summary class="goal-title">Technological Innovation</summary>
+            <div class="goal-description">To leverage modern technology to create an engaging digital experience for the school.</div>
+        </details>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </section>
+    
+    <script>
+        window.addEventListener('load', () => { const overlay = document.getElementById('transition-overlay'); overlay.style.opacity = '0'; setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 500); });
+    </script>
+</body>
+</html>

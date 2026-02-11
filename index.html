@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTTHS Directory</title>
+    <link rel="icon" type="image/png" href="IMG/TAYTUNGLOGO.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- EIDER DARK THEME --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; 
+            color: #ffffff; 
+            height: 100vh; 
+            margin: 0; padding: 0; 
+            overflow: hidden; /* No scrolling */
+            display: flex; flex-direction: column;
+        }
+
+        /* --- BACKGROUND VIDEO --- */
+        #bg-video {
+            position: fixed; right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -2; object-fit: cover;
+        }
+
+        /* --- DARK OVERLAY --- */
+        .video-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 10, 0.75); 
+            z-index: -1; backdrop-filter: blur(3px);
+        }
+
+        /* --- CENTERED NAVBAR (LOGO ONLY) --- */
+        .navbar { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem; 
+            display: flex; 
+            justify-content: center; /* Puts logo dead center */
+            align-items: center; 
+            z-index: 100; 
+        }
+
+        /* Center Logo Styles */
+        .logo { 
+            display: flex; align-items: center; gap: 10px;
+            font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; 
+            color: #fff; text-transform: uppercase; 
+        }
+        
+        .logo-img {
+            height: 50px; width: auto;
+            filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.8));
+            transition: transform 0.3s ease;
+            cursor: pointer; 
+        }
+        
+        .logo-img:hover { transform: scale(1.1); }
+
+        /* --- CENTERED HERO TEXT (BIGGER) --- */
+        .hero { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            padding: 2rem; 
+            width: 100%;
+        }
+        
+        .hero-text { 
+            max-width: 900px; 
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .hero h1 { 
+            font-size: 4.5rem; /* Big Title */
+            margin-bottom: 1rem; 
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(90deg, #fff, #a5b4fc); 
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            letter-spacing: -1px;
+        }
+        
+        .hero p { 
+            font-size: 1.5rem; /* Bigger subtitle */
+            margin-bottom: 3rem; 
+            color: #ccc; 
+            max-width: 700px;
+            margin-left: auto; margin-right: auto;
+        }
+
+        /* --- BUTTONS --- */
+        .buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .button { 
+            padding: 15px 40px; font-size: 1.1rem; 
+            color: #fff; text-decoration: none; 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.2); 
+            border-radius: 50px; /* Fully rounded */
+            transition: all 0.3s ease; 
+            backdrop-filter: blur(5px);
+            font-weight: 600;
+        }
+        .button:hover { 
+            background: #fff; color: #000; 
+            box-shadow: 0 0 30px rgba(255,255,255,0.4); 
+            transform: translateY(-3px);
+        }
+
+        /* --- NEW SECONDARY BUTTON CONTAINER --- */
+        .bottom-button {
+            margin-top: 20px; /* Space between top 3 buttons and this one */
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Animation */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        #transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; transition: opacity 0.5s; pointer-events: none; opacity: 1; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .hero p { font-size: 1.1rem; }
+            .buttons { flex-direction: column; width: 100%; max-width: 300px; margin: 0 auto; }
+            .button { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="IMG/BG Video.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+    <div id="transition-overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="IMG/TAYTUNGLOGO.png" alt="BTTHS" class="logo-img" onclick="window.location.href='https://www.btths.edu.ph'">
+            BTTHS Directory
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-text">
+            <h1>WELCOME TO BTTHS<br>INTERACTIVE DIRECTORY</h1>
+            <p>Your ultimate guide to navigating the campus. Find classrooms, facilities, and everything you need in seconds.</p>
+            
+            <div class="buttons">
+                <a href="campus.html" class="button">Start Exploring</a>
+                <a href="goals.html" class="button">View Goals</a>
+                <a href="contact.html" class="button">Meet the Team</a>
+            </div>
+
+            <div class="bottom-button">
+                <a href="leaders.html" class="button">Historical Monuments</a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 500);
+        });
+
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = link.getAttribute('href');
+                const overlay = document.getElementById('transition-overlay');
+                overlay.style.pointerEvents = 'auto'; 
+                overlay.style.opacity = '1'; 
+                setTimeout(() => { window.location.href = url; }, 500);
+            });
+        });
+    </script>
+</body>
+</html>

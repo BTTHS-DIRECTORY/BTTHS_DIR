@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Leaders - BTTHS Directory</title>
+    <link rel="icon" type="image/png" href="IMG/TAYTUNGLOGO.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- SHARED STYLES --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; color: #ffffff; 
+            margin: 0; padding: 0; 
+            min-height: 100vh; 
+            display: flex; flex-direction: column; 
+            background-image: radial-gradient(circle at 50% 0%, #1a2a3a 0%, #000000 70%); 
+            background-attachment: fixed;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 0.8rem 2rem; 
+            display: flex; justify-content: center; align-items: center; 
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
+        .logo-img { height: 50px; width: auto; filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.8)); transition: transform 0.3s ease; cursor: pointer; }
+        .logo-img:hover { transform: scale(1.1); }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 1400px; 
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(90deg, #fff, #a5b4fc); 
+            background-clip: text; -webkit-background-clip: text; color: transparent;
+            text-align: center;
+        }
+
+        /* --- TEAM GRID LAYOUT --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        /* --- LEADER CARD --- */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer; /* Indicates interactivity */
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+            border-color: rgba(165, 180, 252, 0.4);
+        }
+
+        /* --- IMAGE STYLES (Mini Slideshow) --- */
+        .profile-img-container {
+            width: 130px;
+            height: 130px;
+            margin-bottom: 1.5rem;
+            position: relative; 
+            border-radius: 50%;
+            overflow: hidden; 
+            border: 3px solid rgba(165, 180, 252, 0.3);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .profile-img-container {
+            transform: scale(1.05);
+            border-color: rgba(165, 180, 252, 0.8);
+            box-shadow: 0 0 30px rgba(165, 180, 252, 0.4);
+        }
+
+        .profile-img {
+            position: absolute; 
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out; 
+            filter: brightness(0.9) grayscale(20%);
+        }
+
+        .profile-img.active {
+            opacity: 1;
+        }
+
+        .card:hover .profile-img.active {
+            filter: brightness(1.1) grayscale(0%);
+        }
+
+        /* --- TEXT STYLES --- */
+        .card h2 { font-size: 1.3rem; margin: 0 0 0.5rem 0; color: #fff; }
+        .card h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #a5b4fc; margin: 0 0 1rem 0; min-height: 20px; }
+        .card p { font-size: 0.9rem; line-height: 1.5; color: #d1d5db; }
+
+        /* --- BACK BUTTON --- */
+        .back-btn { display: inline-block; padding: 12px 30px; background: rgba(255,255,255,0.05); color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; margin-top: 3rem; font-size: 0.95rem; transition: all 0.3s; backdrop-filter: blur(5px); }
+        .back-btn:hover { background: #fff; color: #000; transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+
+        #transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; transition: opacity 0.5s; pointer-events: none; opacity: 1; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .team-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div id="transition-overlay"></div>
+    
+    <nav class="navbar">
+        <div class="logo">
+            <img src="IMG/TAYTUNGLOGO.png" alt="BTTHS" class="logo-img" onclick="location.href='index.html'">
+            BTTHS Directory
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Historical Figures</h1>
+        
+        <div class="team-grid">
+            
+            <div class="card" onclick="location.href='rizal.html'" onmouseenter="startCardSlideshow(this)" onmouseleave="stopCardSlideshow(this)">
+                <div class="profile-img-container">
+                    <img src="IMG/JR.jpg" class="profile-img active" alt="Rizal 1">
+                    <img src="IMG/JR1.jpg" class="profile-img" alt="Rizal 2">
+                </div>
+                <h2>Jose Rizal</h2>
+                <h3>Filipino National Hero</h3>
+                <p>
+                    A Filipino national hero who fought for freedom through his writings and ideas. Click to read more.
+                </p>
+            </div>
+
+            <div class="card" onclick="location.href='confucius.html'" onmouseenter="startCardSlideshow(this)" onmouseleave="stopCardSlideshow(this)">
+                <div class="profile-img-container">
+                    <img src="IMG/Confucius_(1).jpg" class="profile-img active" alt="Confucius 1">
+                    <img src="IMG/Confucius_(2).jpg" class="profile-img" alt="Confucius 2">
+                    <img src="IMG/Confucius_(3).jpg" class="profile-img" alt="Confucius 3">
+                </div>
+                <h2>Confucius</h2>
+                <h3>Philosopher & Teacher</h3>
+                <p>
+                    A Chinese philosopher and teacher who emphasized good morals, respect, and proper behavior.
+                </p>
+            </div>
+
+            <div class="card" onclick="location.href='sunyatsen.html'" onmouseenter="startCardSlideshow(this)" onmouseleave="stopCardSlideshow(this)">
+                <div class="profile-img-container">
+                    <img src="IMG/SunYatZen_(1).jpg" class="profile-img active" alt="Sun Yat-sen 1">
+                    <img src="IMG/SunYatZen_(2).jpg" class="profile-img" alt="Sun Yat-sen 2">
+                    <img src="IMG/SunYatZen_(3).jpg" class="profile-img" alt="Sun Yat-sen 3">
+                </div>
+                <h2>Sun Yat-sen</h2>
+                <h3>Father of the Nation</h3>
+                <p>
+                    A Chinese revolutionary leader known as the “Father of the Nation” in China.
+                </p>
+            </div>
+
+            <div class="card" onclick="location.href='chiang.html'" onmouseenter="startCardSlideshow(this)" onmouseleave="stopCardSlideshow(this)">
+                <div class="profile-img-container">
+                    <img src="IMG/Chiang_(1).jpg" class="profile-img active" alt="Chiang Kai-shek 1">
+                    <img src="IMG/Chiang_(2).jpg" class="profile-img" alt="Chiang Kai-shek 2">
+                </div>
+                <h2>Chiang Kai-shek</h2>
+                <h3>Political Leader</h3>
+                <p>
+                    A Chinese political and military leader who led the Nationalist Party.
+                </p>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="back-btn">Return Home</a>
+    </div>
+
+    <script>
+        // --- PAGE TRANSITION ---
+        window.addEventListener('load', () => { 
+            const overlay = document.getElementById('transition-overlay'); 
+            overlay.style.opacity = '0'; 
+            setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 500); 
+        });
+
+        // --- MINI SLIDESHOW LOGIC ---
+        let intervals = new Map(); 
+
+        function startCardSlideshow(card) {
+            const images = card.querySelectorAll('.profile-img');
+            if (images.length <= 1) return; 
+
+            let index = 0;
+            // Find current active index
+            images.forEach((img, i) => {
+                if(img.classList.contains('active')) index = i;
+            });
+
+            // Start Timer (Change every 1.5 seconds)
+            const intervalId = setInterval(() => {
+                images[index].classList.remove('active'); 
+                index = (index + 1) % images.length; 
+                images[index].classList.add('active'); 
+            }, 1500);
+
+            intervals.set(card, intervalId);
+        }
+
+        function stopCardSlideshow(card) {
+            // Stop the timer
+            if (intervals.has(card)) {
+                clearInterval(intervals.get(card));
+                intervals.delete(card);
+            }
+        }
+    </script>
+</body>
+</html>

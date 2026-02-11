@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - BTTHS Directory</title>
+    <link rel="icon" type="image/png" href="IMG/TAYTUNGLOGO.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- SHARED STYLES --- */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #050505; color: #ffffff; 
+            min-height: 100vh; margin: 0; padding: 0; 
+            background-image: radial-gradient(circle at 50% 0%, #1a2a3a 0%, #000000 70%);
+            display: flex; flex-direction: column;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 0.8rem 2rem; 
+            display: flex; justify-content: center; align-items: center; 
+            z-index: 100; position: sticky; top: 0; 
+        }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; color: #fff; cursor: pointer; text-transform: uppercase; }
+        .logo-img { height: 40px; width: auto; filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.8)); transition: transform 0.3s ease; }
+        .logo:hover .logo-img { transform: scale(1.1); }
+
+        /* --- MAIN CONTAINER --- */
+        .content { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 4rem 2rem; 
+            text-align: center; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .section-title { 
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            margin: 0 0 2rem 0; 
+            background: linear-gradient(90deg, #fff, #a5b4fc); 
+            background-clip: text; -webkit-background-clip: text; color: transparent;
+        }
+        
+        .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            width: 80%;
+            margin: 4rem auto;
+        }
+
+        /* --- TEAM GRID (Interactive) --- */
+        .members-grid { 
+            display: grid; 
+            grid-template-columns: repeat(5, 1fr); 
+            gap: 1.5rem; 
+            margin-bottom: 2rem;
+        }
+        
+        .member-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; 
+            padding: 2rem 1rem; 
+            text-align: center; 
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px; 
+            cursor: pointer; /* Shows it is clickable */
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-card:hover { 
+            transform: translateY(-5px); 
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(165, 180, 252, 0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .member-card::after {
+            content: "Click for Info";
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.7rem;
+            color: #6366f1;
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .member-card:hover::after { opacity: 1; bottom: 15px; }
+
+        .member-card h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; font-weight: 600; color: #fff; }
+        .member-card p { color: #a5b4fc; margin: 0; font-size: 0.95rem; font-weight: 300; }
+
+        /* --- MODAL (The Bubble) STYLES --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none; /* Hidden by default */
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+
+        .modal-bubble {
+            background: #121212;
+            border: 1px solid rgba(165, 180, 252, 0.3);
+            padding: 3rem;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 400px; width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        .modal-img {
+            width: 140px; height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #6366f1;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+            background-color: #222; /* Fallback color */
+        }
+
+        .modal-name { font-size: 2rem; margin: 0 0 5px 0; color: #fff; font-weight: 700; }
+        .modal-role { color: #a5b4fc; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; }
+        
+        .modal-info-row { 
+            background: rgba(255,255,255,0.05); 
+            padding: 12px; 
+            border-radius: 12px; 
+            margin-bottom: 10px; 
+            color: #d1d5db; 
+            font-size: 1rem; 
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+
+        .modal-info-row a { color: #a5b4fc; text-decoration: none; transition: 0.2s; }
+        .modal-info-row a:hover { color: #fff; text-decoration: underline; }
+
+        .modal-close {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 2rem; color: #6b7280; cursor: pointer; transition: 0.3s;
+            line-height: 1;
+        }
+        .modal-close:hover { color: #fff; transform: rotate(90deg); }
+
+
+        /* --- OFFICES GRID --- */
+        .offices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .office-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+        .office-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(255,255,255,0.05);
+            transform: translateX(5px);
+        }
+
+        .office-icon {
+            background: rgba(99, 102, 241, 0.2);
+            width: 45px; height: 45px;
+            flex-shrink: 0; 
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.1rem; color: #a5b4fc;
+        }
+
+        .office-info h3 { margin: 0 0 3px 0; font-size: 1rem; color: #fff; }
+        .office-info p { margin: 0 0 3px 0; color: #888; font-size: 0.85rem; }
+        .office-info a { color: #a5b4fc; text-decoration: none; font-size: 0.85rem; transition: 0.2s; }
+        .office-info a:hover { color: #fff; text-decoration: underline; }
+
+        .back-link { display: inline-block; margin-top: 4rem; color: #6b7280; text-decoration: none; font-size: 0.95rem; transition: 0.3s; }
+        .back-link:hover { color: #fff; transform: translateX(-5px); }
+
+        #transition-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #050505; z-index: 9999; transition: opacity 0.5s; pointer-events: none; opacity: 1; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .members-grid { grid-template-columns: repeat(3, 1fr); } 
+            .offices-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .members-grid { grid-template-columns: 1fr; }
+            .offices-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="transition-overlay"></div>
+
+    <nav class="navbar">
+        <div class="logo" onclick="location.href='index.html'">
+            <img src="IMG/TAYTUNGLOGO.png" alt="BTTHS" class="logo-img">
+            BTTHS Directory
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1 class="section-title">Development Team</h1>
+        <p style="color: #888; margin-bottom: 2rem;">Click on a team member to view their profile.</p>
+        
+        <div class="members-grid">
+            
+            <div class="member-card" onclick="openMember('Adriel Catipay', 'Lead Content Specialist', 'IMG/ADRIEL.png', 'Grade 10 Aquamarine', 'adriel.catipay@btths.edu.ph')">
+                <h3>Adriel Catipay</h3>
+                <p>Lead Content Specialist</p>
+            </div>
+
+            <div class="member-card" onclick="openMember('Benjamin Jacob Ymalay', 'Designer', 'IMG/JACOB.png', 'Grade 10 Baryte', 'benjamin.ymalay@btths.edu.ph')">
+                <h3>Benjamin Jacob Ymalay</h3>
+                <p>Designer</p>
+            </div>
+
+            <div class="member-card" onclick="openMember('John Austin Derial', 'Lead Developer', 'IMG/AUSTIN.jpg', 'Grade 10 Diamond', 'john.derial@btths.edu.ph')">
+                <h3>John Austin Derial</h3>
+                <p>Lead Developer</p>
+            </div>
+
+            <div class="member-card" onclick="openMember('Gidnaj Tumpag', 'Content Specialist', 'IMG/GIDNAJ.png', 'Grade 10 Aqua', 'gidnaj.tumpag@btths.edu.ph')">
+                <h3>Gidnaj Tumpag</h3>
+                <p>Content Specialist</p>
+            </div>
+
+            <div class="member-card" onclick="openMember('Alonzo Pahilanga', 'Support', 'IMG/ALONZO.jpg', 'Grade 10 Baryte', 'alonzo.pahilanga@btths.edu.ph')">
+                <h3>Alonzo Pahilanga</h3>
+                <p>Support</p>
+            </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <h1 class="section-title">School Offices Directory</h1>
+        
+        <div class="offices-grid">
+            <div class="office-card">
+                <div class="office-icon">🎓</div>
+                <div class="office-info">
+                    <h3>Principal's Office</h3>
+                    <p>Academic & Admin</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=principal@btths.edu.ph" target="_blank">principal@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">📂</div>
+                <div class="office-info">
+                    <h3>Registrar's Office</h3>
+                    <p>Records & Enrollment</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=registrar@btths.edu.ph" target="_blank">registrar@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">💰</div>
+                <div class="office-info">
+                    <h3>Accounting Office</h3>
+                    <p>Tuition & Fees</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=finance@btths.edu.ph" target="_blank">finance@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">🤝</div>
+                <div class="office-info">
+                    <h3>Guidance Office</h3>
+                    <p>Counseling & Wellness</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=guidance@btths.edu.ph" target="_blank">guidance@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">⚖️</div>
+                <div class="office-info">
+                    <h3>Prefect of Discipline</h3>
+                    <p>Student Conduct</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=discipline@btths.edu.ph" target="_blank">discipline@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">🩺</div>
+                <div class="office-info">
+                    <h3>School Clinic</h3>
+                    <p>Medical & Dental</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=clinic@btths.edu.ph" target="_blank">clinic@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">📚</div>
+                <div class="office-info">
+                    <h3>Library</h3>
+                    <p>Books & Research</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=library@btths.edu.ph" target="_blank">library@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">👥</div>
+                <div class="office-info">
+                    <h3>HR Office</h3>
+                    <p>Employment Concerns</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hr@btths.edu.ph" target="_blank">hr@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">📦</div>
+                <div class="office-info">
+                    <h3>Property Custodian</h3>
+                    <p>Supplies & Facilities</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=property@btths.edu.ph" target="_blank">property@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">💻</div>
+                <div class="office-info">
+                    <h3>IT Department</h3>
+                    <p>Technical Support</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=it@btths.edu.ph" target="_blank">it@btths.edu.ph</a>
+                </div>
+            </div>
+
+            <div class="office-card">
+                <div class="office-icon">📝</div>
+                <div class="office-info">
+                    <h3>Academic Coordinator</h3>
+                    <p>Curriculum & Faculty</p>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=academics@btths.edu.ph" target="_blank">academics@btths.edu.ph</a>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-link">← Return to Home</a>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="closeMember()">
+        <div class="modal-bubble" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeMember()">&times;</div>
+            
+            <img id="m-img" src="IMG/TAYTUNGLOGO.png" alt="Profile" class="modal-img">
+            <h2 id="m-name" class="modal-name">Name Here</h2>
+            <div id="m-role" class="modal-role">Role Here</div>
+            
+            <div class="modal-info-row">
+                <span>📚</span>
+                <span id="m-grade">Section Name</span>
+            </div>
+            
+            <div class="modal-info-row">
+                <span>📧</span>
+                <a id="m-email" href="#">email@address.com</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // --- PAGE TRANSITION ---
+        window.addEventListener('load', () => { 
+            const overlay = document.getElementById('transition-overlay'); 
+            overlay.style.opacity = '0'; 
+            setTimeout(() => { overlay.style.pointerEvents = 'none'; }, 500); 
+        });
+
+        // --- MODAL LOGIC ---
+        function openMember(name, role, imgPath, grade, email) {
+            // 1. Populate Data
+            document.getElementById('m-name').innerText = name;
+            document.getElementById('m-role').innerText = role;
+            document.getElementById('m-img').src = imgPath;
+            document.getElementById('m-grade').innerText = grade;
+            
+            const emailLink = document.getElementById('m-email');
+            emailLink.innerText = email;
+            emailLink.href = "mailto:" + email;
+
+            // 2. Show Modal with Animation
+            const overlay = document.getElementById('modal-overlay');
+            const bubble = document.querySelector('.modal-bubble');
+            
+            overlay.style.display = 'flex';
+            
+            setTimeout(() => {
+                overlay.style.opacity = '1';
+                bubble.style.transform = 'scale(1)';
+            }, 10);
+        }
+
+        function closeMember() {
+            const overlay = document.getElementById('modal-overlay');
+            const bubble = document.querySelector('.modal-bubble');
+            
+            overlay.style.opacity = '0';
+            bubble.style.transform = 'scale(0.8)';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 300); 
+        }
+    </script>
+</body>
+</html>
